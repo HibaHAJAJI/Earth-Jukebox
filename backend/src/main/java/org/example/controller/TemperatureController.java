@@ -1,4 +1,4 @@
-package example.controller;
+package org.example.controller;
 
 public class TemperatureController {
 }

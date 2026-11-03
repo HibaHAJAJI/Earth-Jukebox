@@ -1,4 +1,4 @@
-package example.config;
+package org.example.config;
 
 public class CorsConfig {
 }

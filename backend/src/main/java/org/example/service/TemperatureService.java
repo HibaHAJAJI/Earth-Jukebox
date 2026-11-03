@@ -1,4 +1,4 @@
-package example.service;
+package org.example.service;
 
 public class TemperatureService {
 }

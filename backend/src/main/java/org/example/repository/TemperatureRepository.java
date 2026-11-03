@@ -1,4 +1,4 @@
-package example.repository;
+package org.example.repository;
 
 public class TemperatureRepository {
 }
