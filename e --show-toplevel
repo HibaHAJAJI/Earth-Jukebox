@@ -1,0 +1,10 @@
+[33m8e82385[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mData-Analysis[m[33m, [m[1;31morigin/feature/docker[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/Backend[m[33m, [m[1;32mBackend[m[33m)[m feat: add Docker Compose configuration
+[33m9d9a61d[m feat: add Dockerfile
+[33m00edd4e[m feat: add CORS configuration
+[33m96bc0a0[m feat: add Temperature controller
+[33ma667edd[m feat: add dataset controller
+[33m9150672[m feat: add temperature services
+[33m7fcc7fc[m feat: add dataset  services
+[33m4790182[m feat: add JPA repositories for datasets and temperature records
+[33m4cd0a19[m feat: add TemperatureRecord entity
+[33m46c163c[m feat: add Dataset entity
