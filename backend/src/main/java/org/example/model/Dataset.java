@@ -1,4 +1,5 @@
-
+import java.util.List;
+import jakarta.persistence.OneToMany;
 package org.example.model;
 
 import java.time.LocalDate;
