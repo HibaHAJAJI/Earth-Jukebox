@@ -1,0 +1,883 @@
+{
+    "dataset": "global_temperature_anomaly",
+    "source": "NASA GISS GISTEMP v4",
+    "unit": "°C",
+    "data": [
+        {
+            "year": 1880,
+            "temperature": -0.17,
+            "moving_average_10y": null,
+            "trend": -0.5156304165501684
+        },
+        {
+            "year": 1881,
+            "temperature": -0.09,
+            "moving_average_10y": null,
+            "trend": -0.5073685326752191
+        },
+        {
+            "year": 1882,
+            "temperature": -0.11,
+            "moving_average_10y": null,
+            "trend": -0.49910664880027156
+        },
+        {
+            "year": 1883,
+            "temperature": -0.18,
+            "moving_average_10y": null,
+            "trend": -0.49084476492532403
+        },
+        {
+            "year": 1884,
+            "temperature": -0.28,
+            "moving_average_10y": null,
+            "trend": -0.4825828810503747
+        },
+        {
+            "year": 1885,
+            "temperature": -0.33,
+            "moving_average_10y": null,
+            "trend": -0.4743209971754272
+        },
+        {
+            "year": 1886,
+            "temperature": -0.31,
+            "moving_average_10y": null,
+            "trend": -0.46605911330047967
+        },
+        {
+            "year": 1887,
+            "temperature": -0.36,
+            "moving_average_10y": null,
+            "trend": -0.45779722942553036
+        },
+        {
+            "year": 1888,
+            "temperature": -0.18,
+            "moving_average_10y": null,
+            "trend": -0.44953534555058283
+        },
+        {
+            "year": 1889,
+            "temperature": -0.11,
+            "moving_average_10y": -0.21200000000000002,
+            "trend": -0.4412734616756335
+        },
+        {
+            "year": 1890,
+            "temperature": -0.36,
+            "moving_average_10y": -0.231,
+            "trend": -0.433011577800686
+        },
+        {
+            "year": 1891,
+            "temperature": -0.22,
+            "moving_average_10y": -0.244,
+            "trend": -0.42474969392573847
+        },
+        {
+            "year": 1892,
+            "temperature": -0.27,
+            "moving_average_10y": -0.25999999999999995,
+            "trend": -0.41648781005078916
+        },
+        {
+            "year": 1893,
+            "temperature": -0.31,
+            "moving_average_10y": -0.273,
+            "trend": -0.40822592617584164
+        },
+        {
+            "year": 1894,
+            "temperature": -0.3,
+            "moving_average_10y": -0.275,
+            "trend": -0.3999640423008941
+        },
+        {
+            "year": 1895,
+            "temperature": -0.23,
+            "moving_average_10y": -0.265,
+            "trend": -0.3917021584259448
+        },
+        {
+            "year": 1896,
+            "temperature": -0.11,
+            "moving_average_10y": -0.24499999999999997,
+            "trend": -0.3834402745509973
+        },
+        {
+            "year": 1897,
+            "temperature": -0.11,
+            "moving_average_10y": -0.21999999999999997,
+            "trend": -0.37517839067604974
+        },
+        {
+            "year": 1898,
+            "temperature": -0.28,
+            "moving_average_10y": -0.22999999999999998,
+            "trend": -0.36691650680110044
+        },
+        {
+            "year": 1899,
+            "temperature": -0.18,
+            "moving_average_10y": -0.23700000000000002,
+            "trend": -0.3586546229261529
+        },
+        {
+            "year": 1900,
+            "temperature": -0.08,
+            "moving_average_10y": -0.209,
+            "trend": -0.3503927390512036
+        },
+        {
+            "year": 1901,
+            "temperature": -0.16,
+            "moving_average_10y": -0.203,
+            "trend": -0.3421308551762561
+        },
+        {
+            "year": 1902,
+            "temperature": -0.28,
+            "moving_average_10y": -0.20400000000000001,
+            "trend": -0.33386897130130855
+        },
+        {
+            "year": 1903,
+            "temperature": -0.37,
+            "moving_average_10y": -0.21000000000000002,
+            "trend": -0.32560708742635924
+        },
+        {
+            "year": 1904,
+            "temperature": -0.47,
+            "moving_average_10y": -0.227,
+            "trend": -0.3173452035514117
+        },
+        {
+            "year": 1905,
+            "temperature": -0.26,
+            "moving_average_10y": -0.23000000000000004,
+            "trend": -0.3090833196764642
+        },
+        {
+            "year": 1906,
+            "temperature": -0.22,
+            "moving_average_10y": -0.24099999999999996,
+            "trend": -0.3008214358015149
+        },
+        {
+            "year": 1907,
+            "temperature": -0.38,
+            "moving_average_10y": -0.26799999999999996,
+            "trend": -0.29255955192656735
+        },
+        {
+            "year": 1908,
+            "temperature": -0.42,
+            "moving_average_10y": -0.28200000000000003,
+            "trend": -0.2842976680516198
+        },
+        {
+            "year": 1909,
+            "temperature": -0.48,
+            "moving_average_10y": -0.312,
+            "trend": -0.2760357841766705
+        },
+        {
+            "year": 1910,
+            "temperature": -0.44,
+            "moving_average_10y": -0.348,
+            "trend": -0.267773900301723
+        },
+        {
+            "year": 1911,
+            "temperature": -0.44,
+            "moving_average_10y": -0.376,
+            "trend": -0.25951201642677546
+        },
+        {
+            "year": 1912,
+            "temperature": -0.37,
+            "moving_average_10y": -0.385,
+            "trend": -0.25125013255182616
+        },
+        {
+            "year": 1913,
+            "temperature": -0.34,
+            "moving_average_10y": -0.382,
+            "trend": -0.24298824867687863
+        },
+        {
+            "year": 1914,
+            "temperature": -0.15,
+            "moving_average_10y": -0.35,
+            "trend": -0.23472636480192932
+        },
+        {
+            "year": 1915,
+            "temperature": -0.14,
+            "moving_average_10y": -0.33799999999999997,
+            "trend": -0.2264644809269818
+        },
+        {
+            "year": 1916,
+            "temperature": -0.36,
+            "moving_average_10y": -0.352,
+            "trend": -0.21820259705203426
+        },
+        {
+            "year": 1917,
+            "temperature": -0.46,
+            "moving_average_10y": -0.36,
+            "trend": -0.20994071317708496
+        },
+        {
+            "year": 1918,
+            "temperature": -0.3,
+            "moving_average_10y": -0.348,
+            "trend": -0.20167882930213743
+        },
+        {
+            "year": 1919,
+            "temperature": -0.27,
+            "moving_average_10y": -0.327,
+            "trend": -0.1934169454271899
+        },
+        {
+            "year": 1920,
+            "temperature": -0.27,
+            "moving_average_10y": -0.31,
+            "trend": -0.1851550615522406
+        },
+        {
+            "year": 1921,
+            "temperature": -0.18,
+            "moving_average_10y": -0.284,
+            "trend": -0.17689317767729307
+        },
+        {
+            "year": 1922,
+            "temperature": -0.28,
+            "moving_average_10y": -0.275,
+            "trend": -0.16863129380234554
+        },
+        {
+            "year": 1923,
+            "temperature": -0.26,
+            "moving_average_10y": -0.267,
+            "trend": -0.16036940992739623
+        },
+        {
+            "year": 1924,
+            "temperature": -0.27,
+            "moving_average_10y": -0.279,
+            "trend": -0.1521075260524487
+        },
+        {
+            "year": 1925,
+            "temperature": -0.22,
+            "moving_average_10y": -0.28700000000000003,
+            "trend": -0.1438456421774994
+        },
+        {
+            "year": 1926,
+            "temperature": -0.11,
+            "moving_average_10y": -0.262,
+            "trend": -0.13558375830255187
+        },
+        {
+            "year": 1927,
+            "temperature": -0.22,
+            "moving_average_10y": -0.23800000000000004,
+            "trend": -0.12732187442760434
+        },
+        {
+            "year": 1928,
+            "temperature": -0.2,
+            "moving_average_10y": -0.22799999999999998,
+            "trend": -0.11905999055265504
+        },
+        {
+            "year": 1929,
+            "temperature": -0.36,
+            "moving_average_10y": -0.23700000000000002,
+            "trend": -0.11079810667770751
+        },
+        {
+            "year": 1930,
+            "temperature": -0.15,
+            "moving_average_10y": -0.225,
+            "trend": -0.10253622280275998
+        },
+        {
+            "year": 1931,
+            "temperature": -0.09,
+            "moving_average_10y": -0.21600000000000003,
+            "trend": -0.09427433892781067
+        },
+        {
+            "year": 1932,
+            "temperature": -0.16,
+            "moving_average_10y": -0.20400000000000001,
+            "trend": -0.08601245505286315
+        },
+        {
+            "year": 1933,
+            "temperature": -0.28,
+            "moving_average_10y": -0.20600000000000002,
+            "trend": -0.07775057117791562
+        },
+        {
+            "year": 1934,
+            "temperature": -0.13,
+            "moving_average_10y": -0.192,
+            "trend": -0.06948868730296631
+        },
+        {
+            "year": 1935,
+            "temperature": -0.2,
+            "moving_average_10y": -0.19,
+            "trend": -0.06122680342801878
+        },
+        {
+            "year": 1936,
+            "temperature": -0.15,
+            "moving_average_10y": -0.194,
+            "trend": -0.05296491955306948
+        },
+        {
+            "year": 1937,
+            "temperature": -0.03,
+            "moving_average_10y": -0.175,
+            "trend": -0.04470303567812195
+        },
+        {
+            "year": 1938,
+            "temperature": 0.0,
+            "moving_average_10y": -0.15499999999999997,
+            "trend": -0.03644115180317442
+        },
+        {
+            "year": 1939,
+            "temperature": -0.02,
+            "moving_average_10y": -0.121,
+            "trend": -0.028179267928226892
+        },
+        {
+            "year": 1940,
+            "temperature": 0.12,
+            "moving_average_10y": -0.094,
+            "trend": -0.019917384053279363
+        },
+        {
+            "year": 1941,
+            "temperature": 0.18,
+            "moving_average_10y": -0.06700000000000002,
+            "trend": -0.011655500178328282
+        },
+        {
+            "year": 1942,
+            "temperature": 0.06,
+            "moving_average_10y": -0.045000000000000005,
+            "trend": -0.003393616303380753
+        },
+        {
+            "year": 1943,
+            "temperature": 0.09,
+            "moving_average_10y": -0.008000000000000004,
+            "trend": 0.004868267571566776
+        },
+        {
+            "year": 1944,
+            "temperature": 0.2,
+            "moving_average_10y": 0.024999999999999998,
+            "trend": 0.013130151446514304
+        },
+        {
+            "year": 1945,
+            "temperature": 0.09,
+            "moving_average_10y": 0.05399999999999999,
+            "trend": 0.021392035321461833
+        },
+        {
+            "year": 1946,
+            "temperature": -0.07,
+            "moving_average_10y": 0.062,
+            "trend": 0.029653919196412915
+        },
+        {
+            "year": 1947,
+            "temperature": -0.03,
+            "moving_average_10y": 0.062,
+            "trend": 0.03791580307136044
+        },
+        {
+            "year": 1948,
+            "temperature": -0.11,
+            "moving_average_10y": 0.051000000000000004,
+            "trend": 0.04617768694630797
+        },
+        {
+            "year": 1949,
+            "temperature": -0.11,
+            "moving_average_10y": 0.042,
+            "trend": 0.0544395708212555
+        },
+        {
+            "year": 1950,
+            "temperature": -0.17,
+            "moving_average_10y": 0.012999999999999994,
+            "trend": 0.06270145469620303
+        },
+        {
+            "year": 1951,
+            "temperature": -0.07,
+            "moving_average_10y": -0.012000000000000005,
+            "trend": 0.07096333857115056
+        },
+        {
+            "year": 1952,
+            "temperature": 0.01,
+            "moving_average_10y": -0.017000000000000005,
+            "trend": 0.07922522244610164
+        },
+        {
+            "year": 1953,
+            "temperature": 0.08,
+            "moving_average_10y": -0.018000000000000002,
+            "trend": 0.08748710632104917
+        },
+        {
+            "year": 1954,
+            "temperature": -0.13,
+            "moving_average_10y": -0.051000000000000004,
+            "trend": 0.0957489901959967
+        },
+        {
+            "year": 1955,
+            "temperature": -0.14,
+            "moving_average_10y": -0.074,
+            "trend": 0.10401087407094423
+        },
+        {
+            "year": 1956,
+            "temperature": -0.19,
+            "moving_average_10y": -0.08600000000000001,
+            "trend": 0.11227275794589175
+        },
+        {
+            "year": 1957,
+            "temperature": 0.05,
+            "moving_average_10y": -0.078,
+            "trend": 0.12053464182084284
+        },
+        {
+            "year": 1958,
+            "temperature": 0.06,
+            "moving_average_10y": -0.06100000000000001,
+            "trend": 0.12879652569579036
+        },
+        {
+            "year": 1959,
+            "temperature": 0.03,
+            "moving_average_10y": -0.04700000000000001,
+            "trend": 0.1370584095707379
+        },
+        {
+            "year": 1960,
+            "temperature": -0.02,
+            "moving_average_10y": -0.03200000000000001,
+            "trend": 0.14532029344568542
+        },
+        {
+            "year": 1961,
+            "temperature": 0.06,
+            "moving_average_10y": -0.019000000000000006,
+            "trend": 0.15358217732063295
+        },
+        {
+            "year": 1962,
+            "temperature": 0.03,
+            "moving_average_10y": -0.017000000000000008,
+            "trend": 0.16184406119558048
+        },
+        {
+            "year": 1963,
+            "temperature": 0.05,
+            "moving_average_10y": -0.020000000000000007,
+            "trend": 0.17010594507053156
+        },
+        {
+            "year": 1964,
+            "temperature": -0.2,
+            "moving_average_10y": -0.027000000000000007,
+            "trend": 0.1783678289454791
+        },
+        {
+            "year": 1965,
+            "temperature": -0.11,
+            "moving_average_10y": -0.024000000000000004,
+            "trend": 0.18662971282042662
+        },
+        {
+            "year": 1966,
+            "temperature": -0.06,
+            "moving_average_10y": -0.011000000000000006,
+            "trend": 0.19489159669537415
+        },
+        {
+            "year": 1967,
+            "temperature": -0.02,
+            "moving_average_10y": -0.018000000000000006,
+            "trend": 0.20315348057032168
+        },
+        {
+            "year": 1968,
+            "temperature": -0.08,
+            "moving_average_10y": -0.03200000000000001,
+            "trend": 0.21141536444527276
+        },
+        {
+            "year": 1969,
+            "temperature": 0.05,
+            "moving_average_10y": -0.03000000000000001,
+            "trend": 0.2196772483202203
+        },
+        {
+            "year": 1970,
+            "temperature": 0.03,
+            "moving_average_10y": -0.025000000000000005,
+            "trend": 0.22793913219516782
+        },
+        {
+            "year": 1971,
+            "temperature": -0.08,
+            "moving_average_10y": -0.03900000000000001,
+            "trend": 0.23620101607011534
+        },
+        {
+            "year": 1972,
+            "temperature": 0.01,
+            "moving_average_10y": -0.041,
+            "trend": 0.24446289994506287
+        },
+        {
+            "year": 1973,
+            "temperature": 0.16,
+            "moving_average_10y": -0.030000000000000006,
+            "trend": 0.2527247838200104
+        },
+        {
+            "year": 1974,
+            "temperature": -0.07,
+            "moving_average_10y": -0.017000000000000005,
+            "trend": 0.2609866676949615
+        },
+        {
+            "year": 1975,
+            "temperature": -0.01,
+            "moving_average_10y": -0.007000000000000004,
+            "trend": 0.269248551569909
+        },
+        {
+            "year": 1976,
+            "temperature": -0.1,
+            "moving_average_10y": -0.011000000000000005,
+            "trend": 0.27751043544485654
+        },
+        {
+            "year": 1977,
+            "temperature": 0.18,
+            "moving_average_10y": 0.008999999999999996,
+            "trend": 0.28577231931980407
+        },
+        {
+            "year": 1978,
+            "temperature": 0.07,
+            "moving_average_10y": 0.023999999999999997,
+            "trend": 0.2940342031947516
+        },
+        {
+            "year": 1979,
+            "temperature": 0.16,
+            "moving_average_10y": 0.034999999999999996,
+            "trend": 0.3022960870697027
+        },
+        {
+            "year": 1980,
+            "temperature": 0.26,
+            "moving_average_10y": 0.05800000000000001,
+            "trend": 0.3105579709446502
+        },
+        {
+            "year": 1981,
+            "temperature": 0.32,
+            "moving_average_10y": 0.098,
+            "trend": 0.31881985481959774
+        },
+        {
+            "year": 1982,
+            "temperature": 0.14,
+            "moving_average_10y": 0.11099999999999999,
+            "trend": 0.32708173869454527
+        },
+        {
+            "year": 1983,
+            "temperature": 0.31,
+            "moving_average_10y": 0.126,
+            "trend": 0.3353436225694928
+        },
+        {
+            "year": 1984,
+            "temperature": 0.16,
+            "moving_average_10y": 0.14900000000000002,
+            "trend": 0.3436055064444403
+        },
+        {
+            "year": 1985,
+            "temperature": 0.12,
+            "moving_average_10y": 0.16199999999999998,
+            "trend": 0.3518673903193914
+        },
+        {
+            "year": 1986,
+            "temperature": 0.18,
+            "moving_average_10y": 0.19,
+            "trend": 0.36012927419433893
+        },
+        {
+            "year": 1987,
+            "temperature": 0.32,
+            "moving_average_10y": 0.20400000000000001,
+            "trend": 0.36839115806928646
+        },
+        {
+            "year": 1988,
+            "temperature": 0.39,
+            "moving_average_10y": 0.236,
+            "trend": 0.376653041944234
+        },
+        {
+            "year": 1989,
+            "temperature": 0.27,
+            "moving_average_10y": 0.24699999999999997,
+            "trend": 0.3849149258191815
+        },
+        {
+            "year": 1990,
+            "temperature": 0.45,
+            "moving_average_10y": 0.266,
+            "trend": 0.3931768096941326
+        },
+        {
+            "year": 1991,
+            "temperature": 0.41,
+            "moving_average_10y": 0.275,
+            "trend": 0.40143869356908013
+        },
+        {
+            "year": 1992,
+            "temperature": 0.22,
+            "moving_average_10y": 0.28300000000000003,
+            "trend": 0.40970057744402766
+        },
+        {
+            "year": 1993,
+            "temperature": 0.23,
+            "moving_average_10y": 0.275,
+            "trend": 0.4179624613189752
+        },
+        {
+            "year": 1994,
+            "temperature": 0.31,
+            "moving_average_10y": 0.29,
+            "trend": 0.4262243451939227
+        },
+        {
+            "year": 1995,
+            "temperature": 0.45,
+            "moving_average_10y": 0.323,
+            "trend": 0.43448622906887024
+        },
+        {
+            "year": 1996,
+            "temperature": 0.33,
+            "moving_average_10y": 0.33799999999999997,
+            "trend": 0.4427481129438213
+        },
+        {
+            "year": 1997,
+            "temperature": 0.47,
+            "moving_average_10y": 0.353,
+            "trend": 0.45100999681876885
+        },
+        {
+            "year": 1998,
+            "temperature": 0.61,
+            "moving_average_10y": 0.37499999999999994,
+            "trend": 0.4592718806937164
+        },
+        {
+            "year": 1999,
+            "temperature": 0.38,
+            "moving_average_10y": 0.38599999999999995,
+            "trend": 0.4675337645686639
+        },
+        {
+            "year": 2000,
+            "temperature": 0.39,
+            "moving_average_10y": 0.38,
+            "trend": 0.47579564844361144
+        },
+        {
+            "year": 2001,
+            "temperature": 0.53,
+            "moving_average_10y": 0.392,
+            "trend": 0.4840575323185625
+        },
+        {
+            "year": 2002,
+            "temperature": 0.63,
+            "moving_average_10y": 0.433,
+            "trend": 0.49231941619351005
+        },
+        {
+            "year": 2003,
+            "temperature": 0.62,
+            "moving_average_10y": 0.472,
+            "trend": 0.5005813000684576
+        },
+        {
+            "year": 2004,
+            "temperature": 0.53,
+            "moving_average_10y": 0.49400000000000005,
+            "trend": 0.5088431839434051
+        },
+        {
+            "year": 2005,
+            "temperature": 0.68,
+            "moving_average_10y": 0.517,
+            "trend": 0.5171050678183526
+        },
+        {
+            "year": 2006,
+            "temperature": 0.64,
+            "moving_average_10y": 0.5479999999999999,
+            "trend": 0.5253669516933002
+        },
+        {
+            "year": 2007,
+            "temperature": 0.66,
+            "moving_average_10y": 0.567,
+            "trend": 0.5336288355682512
+        },
+        {
+            "year": 2008,
+            "temperature": 0.54,
+            "moving_average_10y": 0.5599999999999999,
+            "trend": 0.5418907194431988
+        },
+        {
+            "year": 2009,
+            "temperature": 0.66,
+            "moving_average_10y": 0.588,
+            "trend": 0.5501526033181463
+        },
+        {
+            "year": 2010,
+            "temperature": 0.72,
+            "moving_average_10y": 0.621,
+            "trend": 0.5584144871930938
+        },
+        {
+            "year": 2011,
+            "temperature": 0.61,
+            "moving_average_10y": 0.629,
+            "trend": 0.5666763710680414
+        },
+        {
+            "year": 2012,
+            "temperature": 0.65,
+            "moving_average_10y": 0.631,
+            "trend": 0.5749382549429889
+        },
+        {
+            "year": 2013,
+            "temperature": 0.67,
+            "moving_average_10y": 0.636,
+            "trend": 0.58320013881794
+        },
+        {
+            "year": 2014,
+            "temperature": 0.75,
+            "moving_average_10y": 0.658,
+            "trend": 0.5914620226928875
+        },
+        {
+            "year": 2015,
+            "temperature": 0.89,
+            "moving_average_10y": 0.679,
+            "trend": 0.599723906567835
+        },
+        {
+            "year": 2016,
+            "temperature": 1.01,
+            "moving_average_10y": 0.716,
+            "trend": 0.6079857904427826
+        },
+        {
+            "year": 2017,
+            "temperature": 0.91,
+            "moving_average_10y": 0.741,
+            "trend": 0.6162476743177301
+        },
+        {
+            "year": 2018,
+            "temperature": 0.85,
+            "moving_average_10y": 0.772,
+            "trend": 0.6245095581926812
+        },
+        {
+            "year": 2019,
+            "temperature": 0.98,
+            "moving_average_10y": 0.804,
+            "trend": 0.6327714420676287
+        },
+        {
+            "year": 2020,
+            "temperature": 1.01,
+            "moving_average_10y": 0.833,
+            "trend": 0.6410333259425762
+        },
+        {
+            "year": 2021,
+            "temperature": 0.85,
+            "moving_average_10y": 0.857,
+            "trend": 0.6492952098175238
+        },
+        {
+            "year": 2022,
+            "temperature": 0.89,
+            "moving_average_10y": 0.881,
+            "trend": 0.6575570936924713
+        },
+        {
+            "year": 2023,
+            "temperature": 1.17,
+            "moving_average_10y": 0.931,
+            "trend": 0.6658189775674188
+        },
+        {
+            "year": 2024,
+            "temperature": 1.28,
+            "moving_average_10y": 0.984,
+            "trend": 0.6740808614423699
+        },
+        {
+            "year": 2025,
+            "temperature": 1.18,
+            "moving_average_10y": 1.013,
+            "trend": 0.6823427453173174
+        }
+    ]
+}
