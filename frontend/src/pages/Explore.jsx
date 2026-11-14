@@ -188,9 +188,12 @@ export default function Explore() {
                 selectedRecord={timeline.currentRecord}
                 metadata={metadata}
                 isPlaying={timeline.isPlaying}
+                playbackSpeed={timeline.playbackSpeed}
                 onPlay={timeline.play}
                 onPause={timeline.pause}
                 onStop={timeline.stop}
+                onReplay={timeline.replay}
+                onSpeedChange={timeline.setPlaybackSpeed}
               />
               <TemperatureInfo selectedRecord={timeline.currentRecord} metadata={metadata} />
             </div>

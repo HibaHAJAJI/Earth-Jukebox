@@ -1,0 +1,28 @@
+# Optional database-backed mode.
+#
+# The MVP starts with JPA/DataSource auto-configuration excluded, so no MySQL
+# instance is required. Activate this profile only when a MySQL database is
+# available and the legacy JPA entities/controllers are needed:
+#
+#   java -jar app.jar --spring.profiles.active=legacy-jpa
+#
+# The connection can be overridden with SPRING_DATASOURCE_* environment
+# variables. This mode is retained for future work and is not exercised by the
+# default file-backed API.
+spring:
+  autoconfigure:
+    exclude: []
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3307/earth_symphony?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
