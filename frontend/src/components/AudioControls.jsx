@@ -1,32 +1,57 @@
 import { useEffect, useRef, useState } from 'react'
-import { AlertCircle, Pause, Play, Radio, Square, Volume1, Volume2, VolumeX } from 'lucide-react'
+import {
+  AlertCircle,
+  Gauge,
+  Pause,
+  Play,
+  Radio,
+  RotateCcw,
+  Square,
+  Volume1,
+  Volume2,
+  VolumeX,
+} from 'lucide-react'
 import useSonificationEngine from '../hooks/useSonificationEngine'
+import {
+  describeSonification,
+  getSonificationTone,
+  SONIFICATION_MAPPING,
+} from '../services/sonificationService'
 import { formatAnomaly, isMissingAnomaly } from '../services/temperatureService'
 import { formatMonthYear, getAnomalyTone } from '../utils/format'
+
+const SPEED_OPTIONS = [0.5, 1, 2, 4]
 
 export default function AudioControls({
   selectedRecord,
   metadata,
   isPlaying = false,
+  playbackSpeed = 1,
   onPlay,
   onPause,
   onStop,
+  onReplay,
+  onSpeedChange,
 }) {
   const { engine, isConnected } = useSonificationEngine()
-  const [volume, setVolume] = useState(70)
+  const [volume, setVolume] = useState(Math.round(SONIFICATION_MAPPING.defaultVolume * 100))
   const [playbackStatus, setPlaybackStatus] = useState('idle')
   const [error, setError] = useState(null)
   const selectedRecordRef = useRef(selectedRecord)
   const wasPlayingRef = useRef(false)
   const unit = metadata?.unit ?? '°C'
   const hasMissingReading = Boolean(selectedRecord) && isMissingAnomaly(selectedRecord.anomaly)
+  const tone = getSonificationTone(selectedRecord)
+  const soundDescription = describeSonification(selectedRecord, unit)
+  const isPaused = !isPlaying && playbackStatus === 'paused'
+  const frequencyLabel = tone.isSilent ? 'Silence' : `${Math.round(tone.frequencyHz)} Hz`
 
   useEffect(() => {
     selectedRecordRef.current = selectedRecord
   }, [selectedRecord])
 
   // The selected month is the single source of truth: every change is pushed
-  // to the engine without restarting playback.
+  // to the engine without restarting the shared timeline.
   useEffect(() => {
     engine.updateData(selectedRecord)
   }, [engine, selectedRecord])
@@ -34,6 +59,10 @@ export default function AudioControls({
   useEffect(() => {
     engine.setVolume(volume / 100)
   }, [engine, volume])
+
+  useEffect(() => {
+    engine.setPlaybackSpeed?.(playbackSpeed)
+  }, [engine, playbackSpeed])
 
   // Keep audio transport synchronized with the shared timeline state.
   useEffect(() => {
@@ -65,9 +94,12 @@ export default function AudioControls({
         }
       } catch (playbackError) {
         if (!request.cancelled) {
+          wasPlayingRef.current = false
           setPlaybackStatus('idle')
           setError(
-            playbackError instanceof Error ? playbackError.message : 'Unable to sync audio playback.',
+            playbackError instanceof Error
+              ? playbackError.message
+              : 'Unable to sync audio playback.',
           )
         }
       }
@@ -80,12 +112,58 @@ export default function AudioControls({
     }
   }, [engine, isConnected, isPlaying])
 
+  // Leaving the page/route must always release the audio context.
+  useEffect(() => {
+    return () => {
+      engine.stop().catch(() => {})
+    }
+  }, [engine])
+
+  // Escape is an immediate, discoverable panic stop while audio is running.
+  useEffect(() => {
+    if (!isPlaying) {
+      return undefined
+    }
+
+    function handleKeyDown(event) {
+      if (event.key !== 'Escape') {
+        return
+      }
+
+      event.preventDefault()
+      wasPlayingRef.current = false
+      setPlaybackStatus('idle')
+      engine.stop().catch(() => {})
+      onStop?.()
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [engine, isPlaying, onStop])
+
+  async function prepareAudio() {
+    try {
+      await engine.prepare?.()
+      return true
+    } catch (prepareError) {
+      setPlaybackStatus('idle')
+      setError(
+        prepareError instanceof Error ? prepareError.message : 'Unable to start audio.',
+      )
+      return false
+    }
+  }
+
   async function handlePlay() {
     if (!isConnected) {
       return
     }
 
     setError(null)
+
+    if (!(await prepareAudio())) {
+      return
+    }
 
     if (onPlay) {
       onPlay()
@@ -98,7 +176,9 @@ export default function AudioControls({
       setPlaybackStatus('playing')
     } catch (playbackError) {
       setPlaybackStatus('idle')
-      setError(playbackError instanceof Error ? playbackError.message : 'Unable to start audio.')
+      setError(
+        playbackError instanceof Error ? playbackError.message : 'Unable to start audio.',
+      )
     }
   }
 
@@ -128,16 +208,31 @@ export default function AudioControls({
     }
 
     setError(null)
+    wasPlayingRef.current = false
+    setPlaybackStatus('idle')
 
     try {
       await engine.stop()
-      setPlaybackStatus('idle')
     } catch (stopError) {
       setError(stopError instanceof Error ? stopError.message : 'Unable to stop audio.')
     } finally {
-      wasPlayingRef.current = false
       onStop?.()
     }
+  }
+
+  async function handleReplay() {
+    if (!isConnected || !onReplay) {
+      return
+    }
+
+    setError(null)
+
+    if (!(await prepareAudio())) {
+      return
+    }
+
+    setPlaybackStatus('starting')
+    onReplay()
   }
 
   const statusText = !isConnected
@@ -147,10 +242,13 @@ export default function AudioControls({
       : isPlaying && playbackStatus === 'starting'
         ? 'Starting audio'
         : isPlaying
-          ? 'Audio engine connected'
-          : 'Audio engine ready'
+          ? 'Audio playing'
+          : isPaused
+            ? 'Audio paused'
+            : 'Audio engine ready'
 
   const VolumeIcon = volume === 0 ? VolumeX : volume < 50 ? Volume1 : Volume2
+  const playLabel = isPaused ? 'Resume' : 'Play'
 
   return (
     <section className="panel audio-panel" aria-labelledby="audio-heading">
@@ -175,12 +273,12 @@ export default function AudioControls({
         </span>
         <div>
           <strong>
-            {isConnected ? 'Sonification engine connected' : 'Sonification engine not connected yet'}
+            {isConnected ? 'Web Audio engine ready' : 'Sonification engine not connected'}
           </strong>
           <p>
             {isConnected
-              ? 'Audio playback follows the shared timeline. The selected month is sent to the engine whenever it changes.'
-              : 'The audio layer is being built by the sonification team. Until it is connected, no audio is generated or played.'}
+              ? 'Pitch, rhythm and year-bell accents are synthesized locally in your browser. Playback follows the shared timeline and starts only when you press Play.'
+              : 'The audio layer is unavailable. No audio is generated or played.'}
           </p>
         </div>
       </div>
@@ -191,17 +289,21 @@ export default function AudioControls({
           className="control-button control-button--primary"
           onClick={handlePlay}
           disabled={!isConnected || isPlaying}
-          aria-label="Play sonification for the selected month"
+          aria-label={
+            isPaused
+              ? 'Resume sonification from the paused month'
+              : 'Play sonification from the selected month'
+          }
         >
           <Play size={16} aria-hidden="true" />
-          Play
+          {playLabel}
         </button>
         <button
           type="button"
           className="control-button"
           onClick={handlePause}
           disabled={!isConnected || !isPlaying}
-          aria-label="Pause sonification"
+          aria-label="Pause sonification without changing the selected month"
         >
           <Pause size={16} aria-hidden="true" />
           Pause
@@ -211,55 +313,101 @@ export default function AudioControls({
           className="control-button"
           onClick={handleStop}
           disabled={!isConnected}
-          aria-label="Stop sonification and reset the timeline"
+          aria-label="Stop sonification immediately and reset the timeline"
         >
           <Square size={14} aria-hidden="true" />
           Stop
         </button>
+        <button
+          type="button"
+          className="control-button"
+          onClick={handleReplay}
+          disabled={!isConnected || !onReplay}
+          aria-label="Replay sonification from the first month in the dataset"
+        >
+          <RotateCcw size={15} aria-hidden="true" />
+          Replay
+        </button>
       </div>
 
-      <div className="volume-control">
-        <label htmlFor="audio-volume">
-          <span>Volume</span>
-          <span className="volume-value">{volume}%</span>
-        </label>
-        <div className="volume-row">
-          <VolumeX size={16} aria-hidden="true" />
-          <input
-            id="audio-volume"
-            type="range"
-            min={0}
-            max={100}
-            step={1}
-            value={volume}
-            onChange={(event) => setVolume(Number(event.target.value))}
-            aria-valuetext={`${volume} percent`}
-          />
-          <VolumeIcon size={18} aria-hidden="true" />
+      <div className="audio-settings">
+        <div className="volume-control">
+          <label htmlFor="audio-volume">
+            <span>Volume</span>
+            <span className="volume-value">{volume}%</span>
+          </label>
+          <div className="volume-row">
+            <VolumeX size={16} aria-hidden="true" />
+            <input
+              id="audio-volume"
+              type="range"
+              min={0}
+              max={100}
+              step={1}
+              value={volume}
+              onChange={(event) => setVolume(Number(event.target.value))}
+              aria-valuetext={`${volume} percent`}
+              aria-describedby="audio-volume-hint"
+            />
+            <VolumeIcon size={18} aria-hidden="true" />
+          </div>
+          <p className="field-hint" id="audio-volume-hint">
+            Volume is applied smoothly while audio is playing.
+          </p>
         </div>
-        <p className="field-hint">
-          {isConnected
-            ? 'Volume is sent to the connected audio engine.'
-            : 'This setting will be passed to the audio engine once available.'}
-        </p>
+
+        <div className="audio-speed-control">
+          <label htmlFor="audio-speed">
+            <Gauge size={13} aria-hidden="true" />
+            Playback speed
+          </label>
+          <select
+            id="audio-speed"
+            value={playbackSpeed}
+            onChange={(event) => onSpeedChange?.(Number(event.target.value))}
+            disabled={!isConnected}
+            aria-label="Audio and timeline playback speed"
+            aria-describedby="audio-speed-hint"
+          >
+            {SPEED_OPTIONS.map((speed) => (
+              <option key={speed} value={speed}>
+                {speed}×
+              </option>
+            ))}
+            {!SPEED_OPTIONS.includes(playbackSpeed) && (
+              <option value={playbackSpeed}>{playbackSpeed}×</option>
+            )}
+          </select>
+          <p className="field-hint" id="audio-speed-hint">
+            One month is one note. The shared timeline uses the same tempo.
+          </p>
+        </div>
       </div>
 
       <div className="audio-data-preview">
         <div>
-          <span>Data queued for audio</span>
+          <span>Selected month</span>
           <strong>{formatMonthYear(selectedRecord)}</strong>
         </div>
-        <span
-          className={`audio-anomaly tone-${getAnomalyTone(selectedRecord?.anomaly)}`}
-        >
+        <span className={`audio-anomaly tone-${getAnomalyTone(selectedRecord?.anomaly)}`}>
           {formatAnomaly(selectedRecord?.anomaly, unit)}
         </span>
+      </div>
+
+      <div className="audio-current-sound" role="group" aria-labelledby="audio-current-heading">
+        <div className="audio-current-header">
+          <span id="audio-current-heading">Current sound</span>
+          <strong className={tone.isSilent ? 'audio-silence' : 'audio-frequency'}>
+            {tone.isSilent ? 'Silence (missing reading)' : `${frequencyLabel} · ${tone.pitchLabel}`}
+          </strong>
+        </div>
+        <p>{soundDescription}</p>
       </div>
 
       {hasMissingReading && (
         <p className="field-hint audio-missing-note">
           This month has no reported anomaly. The timeline keeps the gap instead of substituting
-          zero, and audio cannot map a value until a reading is available.
+          zero, and the audio engine stays silent for this step.
         </p>
       )}
 
@@ -270,10 +418,49 @@ export default function AudioControls({
         </p>
       )}
 
+      <section className="audio-legend" aria-labelledby="audio-legend-heading">
+        <h3 id="audio-legend-heading">How data becomes sound</h3>
+        <dl className="audio-legend-grid">
+          <div>
+            <dt>Pitch · temperature anomaly</dt>
+            <dd>
+              A fixed range is used for every year: <strong>−2.0 °C = 220 Hz</strong> (A3),{' '}
+              <strong>0.0 °C = 440 Hz</strong> (A4, the 1951–1980 baseline) and{' '}
+              <strong>+2.0 °C = 880 Hz</strong> (A5). Higher anomalies sound higher.
+            </dd>
+          </div>
+          <div>
+            <dt>Rhythm · time progression</dt>
+            <dd>
+              Each month is one short note. The playback-speed control changes both the visual
+              timeline and the audio tempo; at 1× a month lasts 620 ms.
+            </dd>
+          </div>
+          <div>
+            <dt>Year boundary</dt>
+            <dd>A soft bell accent marks the first month of a later year.</dd>
+          </div>
+          <div>
+            <dt>Missing data</dt>
+            <dd>
+              A month without a reported anomaly is silence. Missing values are never converted to
+              0 °C or to an invented pitch.
+            </dd>
+          </div>
+        </dl>
+        <p className="audio-legend-note">
+          The pitch range is fixed so any two months can be compared directly. Values beyond the
+          range are clamped to the nearest pitch while the displayed anomaly remains exact.
+        </p>
+      </section>
+
+      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {soundDescription}
+      </p>
+
       <p className="audio-contract">
-        Integration contract: <code>play(record)</code>, <code>pause()</code>, <code>stop()</code>,{' '}
-        <code>setVolume(0–1)</code>, <code>updateData(record)</code>. See{' '}
-        <code>INTEGRATION.md</code>.
+        Synthesized locally with the Web Audio API. No audio files or third-party services are
+        used. Press <kbd>Escape</kbd> while playing for an immediate stop.
       </p>
     </section>
   )

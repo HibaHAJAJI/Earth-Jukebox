@@ -135,62 +135,92 @@ The current `TemperatureRecord` model has `year` and `anomaly` but **no
 
 ---
 
-## 3. Sonification developer contract
+## 3. Sonification engine
 
-### 3.1 Register the engine
+### 3.1 The engine is already registered
 
-Implement the engine object and register it once during app startup:
+`src/services/sonificationService.js` now contains the production Web Audio
+engine. It registers itself once when the module is imported, so no extra app
+startup call is required for normal use.
+
+The UI still supports replacing it at runtime:
 
 ```js
 import { registerSonificationEngine } from './services/sonificationService'
 
 registerSonificationEngine({
   isConnected: true,
-
-  // record = { year, month, anomaly } | null
   async play(record) {},
   async pause() {},
   async stop() {},
-
-  // value = 0..1
   setVolume(value) {},
-
-  // Called whenever the selected month changes.
+  setPlaybackSpeed(value) {},
   updateData(record) {},
 })
 ```
 
-The engine may be registered before or after React mounts. The UI subscribes to
-registration changes and updates immediately.
+### 3.2 Engine behaviour
 
-### 3.2 When the frontend calls each method
+| Scientific data | Audio representation |
+| --- | --- |
+| Temperature anomaly | Pitch, using a fixed −2.0 °C … +2.0 °C domain |
+| Higher anomaly | Higher pitch |
+| Lower anomaly | Lower pitch |
+| Time progression | One short note per month; rhythm follows the shared speed control |
+| Year boundary | Soft bell accent when playback enters a later year |
+| Missing anomaly | Silence — never 0 °C and never an invented pitch |
+
+The documented mapping is:
+
+```text
+normalized = (anomaly + 2.0) / 4.0        (clamped to 0…1)
+frequency  = 220 Hz × (880 / 220) ^ normalized
+
+-2.0 °C → 220 Hz (A3)
+ 0.0 °C → 440 Hz (A4, 1951–1980 baseline)
++2.0 °C → 880 Hz (A5)
+```
+
+Pitch changes use short glides and every note has an attack/release envelope.
+Stopping fades out before the `AudioContext` is closed. A single monophonic
+oscillator is reused, so repeated interactions cannot create overlapping audio
+sessions.
+
+See [`SONIFICATION.md`](./SONIFICATION.md) for the full mapping, lifecycle and
+test notes.
+
+### 3.3 When the frontend calls each method
 
 | Method | When it is called |
 | --- | --- |
 | `play(record)` | Timeline enters the playing state (timeline Play or audio Play). |
 | `pause()` | Timeline is paused. |
-| `stop()` | Audio Stop button is pressed. |
+| `stop()` | Audio Stop is pressed, Escape is pressed while playing, or the panel unmounts. |
+| `replay(record)` | Audio Replay is pressed; the shared timeline restarts at the first month. |
 | `setVolume(0..1)` | Volume slider changes or a new engine registers. |
+| `setPlaybackSpeed(0.25..8)` | The shared speed control changes. |
 | `updateData(record)` | The selected month changes, including while playing. |
+| `prepare()` | A user presses Play/Replay, so the browser can unlock audio. |
 
 Important:
 
-- `updateData` should update the mapped data without restarting playback.
-- `play`, `pause`, and `stop` should be safe to call more than once
-  (idempotent), because React may re-run effects.
-- If the engine cannot play (for example the browser blocked autoplay), reject
-  the promise. The UI shows the error and never claims audio is playing.
-- Do **not** generate audio in the frontend. The placeholder engine produces no
-  sound.
+- `updateData` updates the mapped note without restarting playback.
+- `play`, `pause`, `stop`, and `updateData` are idempotent because React may
+  re-run effects.
+- If the browser blocks audio or Web Audio is unsupported, the promise rejects
+  with a readable error. The UI shows the error and never claims audio is
+  playing.
+- Audio is synthesized locally. No audio files or third-party services are used.
 
-### 3.3 Connection status
+### 3.4 Connection status
 
 `AudioControls` shows one of:
 
-- `Not connected` — no real engine registered; controls are disabled.
+- `Not connected` — no engine registered; controls are disabled.
 - `Audio engine ready` — engine registered and timeline is paused.
-- `Starting audio` / `Audio engine connected` — engine accepted playback.
-- `Audio error` — engine rejected a call.
+- `Starting audio` / `Audio playing` — engine accepted playback.
+- `Audio paused` — playback was paused without losing the selected month.
+- `Audio error` — the browser blocked audio or a call failed.
 
 The UI only reports “connected” when `engine.isConnected === true`.
 

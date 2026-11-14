@@ -1,0 +1,31 @@
+{
+  "dataset": "global-temperature-anomaly",
+  "dataVersion": "gistemp-v4-4c64eda288bc",
+  "rawFile": "data/raw/GLB.Ts+dSST.csv",
+  "rawSha256": "4c64eda288bce32b8d76926278f346ecea1e53506df8ee72a3d5accb0657c416",
+  "sourceUrl": "https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv",
+  "retrievedAt": "2026-11-14",
+  "generatedOn": "2026-11-14",
+  "coverage": {
+    "from": "1880-01",
+    "to": "2026-12",
+    "years": [
+      1880,
+      2026
+    ],
+    "monthlyPositions": 1764,
+    "numericValues": 1761,
+    "missingValues": 3
+  },
+  "validation": {
+    "yearsContinuous": true,
+    "monthsComplete": true,
+    "duplicateYearMonths": 0,
+    "outOfRangeValues": 0,
+    "missingPolicy": "preserved-as-null"
+  },
+  "outputs": [
+    "data/processed/monthly_temperature_anomaly.json",
+    "backend/src/main/resources/monthly_temperature_anomaly.json"
+  ]
+}

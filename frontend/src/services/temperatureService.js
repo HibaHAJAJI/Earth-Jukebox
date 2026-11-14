@@ -1,4 +1,4 @@
-import mockTemperatureData from '../data/mockTemperatureData'
+import mockTemperatureData from '../data/mockTemperatureData.js'
 
 /**
  * DATA INTEGRATION POINT

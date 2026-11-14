@@ -1,4 +1,11 @@
 package org.example.dto;
 
-public class TemperatureDTO {
+/**
+ * Monthly observation contract consumed by the frontend.
+ */
+public record TemperatureDTO(
+        Integer year,
+        Integer month,
+        Double anomaly
+) {
 }

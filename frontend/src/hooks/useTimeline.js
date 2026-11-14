@@ -35,7 +35,7 @@ function resolveInitialIndex(records, { initialIndex, initialYear, initialMonth 
 /**
  * TIMELINE INTEGRATION CONTRACT
  *
- * currentIndex, setCurrentIndex, isPlaying, play, pause, stop,
+ * currentIndex, setCurrentIndex, isPlaying, play, pause, stop, replay,
  * playbackSpeed, setPlaybackSpeed
  *
  * The parent owns one instance of this hook. Pass currentRecord to the chart,
@@ -135,6 +135,17 @@ export default function useTimeline(records, options = {}) {
     setCurrentIndexState(0)
   }, [])
 
+  // Replay restarts the shared record at the first available month and keeps
+  // the same timeline instance, so the chart and audio stay synchronized.
+  const replay = useCallback(() => {
+    if (length === 0) {
+      return
+    }
+
+    setCurrentIndexState(0)
+    setIsPlaying(true)
+  }, [length])
+
   const setPlaybackSpeed = useCallback((nextSpeed) => {
     const value = Number(nextSpeed)
 
@@ -157,6 +168,7 @@ export default function useTimeline(records, options = {}) {
     play,
     pause,
     stop,
+    replay,
     previous,
     next,
     progress,
