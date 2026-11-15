@@ -1,0 +1,41 @@
+# PostgreSQL-backed profile for NASA multi-source data storage.
+#
+# Activate with: --spring.profiles.active=postgres
+#
+# The default profile remains file-backed (no database required).
+# The legacy-jpa profile (MySQL) is unchanged.
+#
+# Connection can be overridden with SPRING_DATASOURCE_* environment
+# variables:
+#   SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/earth_jukebox
+#   SPRING_DATASOURCE_USERNAME=earth_jukebox
+#   SPRING_DATASOURCE_PASSWORD=change-me
+
+spring:
+  autoconfigure:
+    exclude: []
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/earth_jukebox}
+    username: ${SPRING_DATASOURCE_USERNAME:earth_jukebox}
+    password: ${SPRING_DATASOURCE_PASSWORD:change-me}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+
+  flyway:
+    enabled: false
+
+server:
+  port: ${PORT:8080}
+
+logging:
+  level:
+    org.example: INFO
+    org.flywaydb: INFO

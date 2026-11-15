@@ -4,15 +4,17 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * Request contract for explaining a single year of NASA temperature data.
+ * Request contract for explaining NASA temperature data for a year or year-month.
  *
- * <p>Year is mandatory and must be >= 1880. No upper bound is enforced here;
- * actual dataset availability is validated by the service layer.
+ * <p>Year is mandatory and must be >= 1880. Month is optional (1-12).
+ * Actual dataset availability is validated by the service layer.
  */
 public record ExplainRequest(
 
         @NotNull(message = "Year is required")
         @Min(value = 1880, message = "Year must be >= 1880")
-        Integer year
+        Integer year,
+
+        Integer month
 ) {
 }
