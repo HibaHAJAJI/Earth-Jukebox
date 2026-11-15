@@ -30,9 +30,10 @@ public interface ExplanationProvider {
      * Generates a TTS-ready explanation for the supplied NASA data context.
      *
      * @param context   compact NASA data context (never null)
+     * @param language  language code (en, fr, ar); defaults to en if null/blank
      * @param narration if true, the response must be limited to approximately 30 words
      * @return explanation text, never null
      * @throws RuntimeException if the provider cannot fulfill the request
      */
-    String explain(NasaDataContext context, boolean narration);
+    String explain(NasaDataContext context, String language, boolean narration);
 }
