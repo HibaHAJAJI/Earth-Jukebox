@@ -3,6 +3,7 @@ package org.example.service;
 
 import org.example.model.Dataset;
 import org.example.repository.DatasetRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -10,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
+@Profile("legacy-jpa")
 public class DatasetService {
 
     private final DatasetRepository datasetRepository;

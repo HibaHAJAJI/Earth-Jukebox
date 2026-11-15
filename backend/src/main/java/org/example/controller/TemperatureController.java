@@ -3,12 +3,14 @@ package org.example.controller;
 
 import org.example.model.TemperatureRecord;
 import org.example.service.TemperatureService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Profile("legacy-jpa")
 @RequestMapping("/api/temperatures")
 public class TemperatureController {
 
