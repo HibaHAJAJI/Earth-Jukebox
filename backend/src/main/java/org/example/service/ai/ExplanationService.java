@@ -34,23 +34,26 @@ public class ExplanationService {
     /**
      * Builds an explanation for a single year, optionally filtered to a month.
      *
-     * @param year  the year to explain (must be >= 1880)
-     * @param month optional month (1-12); if null, all months of the year are included
+     * @param year      the year to explain (must be >= 1880)
+     * @param month     optional month (1-12); if null, all months of the year are included
+     * @param language  optional language code (en, fr, ar); defaults to en
      * @return structured explanation response
      */
-    public ExplainResponse explain(Integer year, Integer month) {
+    public ExplainResponse explain(Integer year, Integer month, String language) {
         if (year == null || year < 1880) {
             return buildErrorResponse(
                     "Year is required and must be >= 1880.",
-                    year, month,
+                    year, month, language,
                     ExplainResponse.ValidationStatus.DATA_NOT_FOUND
             );
         }
 
+        String resolvedLanguage = (language == null || language.isBlank()) ? "en" : language;
+
         if (!provider.isAvailable()) {
             return buildErrorResponse(
                     "No explanation provider is configured. Set OPENAI_API_KEY to enable AI explanations.",
-                    year, month,
+                    year, month, resolvedLanguage,
                     ExplainResponse.ValidationStatus.DATA_NOT_FOUND
             );
         }
@@ -66,7 +69,7 @@ public class ExplanationService {
             if (monthlyFacts.isEmpty()) {
                 return buildErrorResponse(
                         "No NASA data found for year " + year + " month " + month + ".",
-                        year, month,
+                        year, month, resolvedLanguage,
                         ExplainResponse.ValidationStatus.DATA_NOT_FOUND
                 );
             }
@@ -88,12 +91,12 @@ public class ExplanationService {
         if (context.retrievedFacts().isEmpty()) {
             return buildErrorResponse(
                     "No NASA data found for year " + year + ".",
-                    year, month,
+                    year, month, resolvedLanguage,
                     ExplainResponse.ValidationStatus.DATA_NOT_FOUND
             );
         }
 
-        String explanation = provider.explain(context, false);
+        String explanation = provider.explain(context, resolvedLanguage, false);
 
         ExplainResponse.ValidationStatus status = context.hasMissingData()
                 ? ExplainResponse.ValidationStatus.INSUFFICIENT_DATA
@@ -109,6 +112,7 @@ public class ExplanationService {
                 context.datasetSource(),
                 yearsCovered,
                 context.unit(),
+                resolvedLanguage,
                 status,
                 context.dataLimitations()
         );
@@ -118,6 +122,7 @@ public class ExplanationService {
             String message,
             Integer year,
             Integer month,
+            String language,
             ExplainResponse.ValidationStatus status
     ) {
         String yearsCovered = (year != null && month != null)
@@ -130,6 +135,7 @@ public class ExplanationService {
                 "NASA GISS GISTEMP v4",
                 yearsCovered,
                 "°C",
+                language,
                 status,
                 "No NASA data available for the requested parameters."
         );

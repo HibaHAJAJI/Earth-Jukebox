@@ -56,13 +56,13 @@ public class OpenAiExplanationProvider implements ExplanationProvider {
     }
 
     @Override
-    public String explain(NasaDataContext context, boolean narration) {
+    public String explain(NasaDataContext context, String language, boolean narration) {
         if (!isAvailable()) {
             throw new IllegalStateException("OpenAI API key is not configured");
         }
 
-        String systemPrompt = buildSystemPrompt(narration);
-        String userPrompt = buildUserPrompt(context);
+        String systemPrompt = buildSystemPrompt(language, narration);
+        String userPrompt = buildUserPrompt(context, language);
 
         try {
             String requestBody = buildRequestBody(systemPrompt, userPrompt, narration);
@@ -93,15 +93,23 @@ public class OpenAiExplanationProvider implements ExplanationProvider {
         }
     }
 
-    private String buildSystemPrompt(boolean narration) {
+    private String buildSystemPrompt(String language, boolean narration) {
+        String languageInstruction = switch (language) {
+            case "fr" -> " Respond ONLY in French (français). "
+            case "ar" -> " Respond ONLY in Arabic (العربية). "
+            default -> " Respond ONLY in English. ";
+        };
+
         if (narration) {
             return "You are Earth Jukebox AI Explainer. "
+                    + languageInstruction
                     + "Use ONLY the supplied NASA_DATA_CONTEXT. "
                     + "Never invent measurements, causes, forecasts, or conclusions. "
                     + "Never replace null values with zero. "
                     + "Maximum 30 words. Suitable for text-to-speech narration. No markdown.";
         }
         return "You are Earth Jukebox AI Explainer. "
+                + languageInstruction
                 + "Use ONLY the supplied NASA_DATA_CONTEXT. "
                 + "Structure your response as FACTS, STATISTICS, INTERPRETATION, LIMITATIONS, DATA SOURCE. "
                 + "Never invent measurements, causes, forecasts, or conclusions. "
@@ -111,7 +119,18 @@ public class OpenAiExplanationProvider implements ExplanationProvider {
                 + "Maximum 80 words. Suitable for text-to-speech narration. No markdown.";
     }
 
-    private String buildUserPrompt(NasaDataContext context) {
+    private String buildUserPrompt(NasaDataContext context, String language) {
+        String languageLabel = switch (language) {
+            case "fr" -> "Langue";
+            case "ar" -> "اللغة";
+            default -> "Language";
+        };
+        String explainPrompt = switch (language) {
+            case "fr" -> " Expliquez ce que l'utilisateur voit et entend.";
+            case "ar" -> " اشرح ما يراه المستخدم ويسمعه.";
+            default -> " Explain what the user is seeing and hearing.";
+        };
+
         return "NASA_DATA_CONTEXT: "
                 + "datasetSource=" + context.datasetSource() + ", "
                 + "yearsUsed=" + context.yearsUsed() + ", "
@@ -122,7 +141,7 @@ public class OpenAiExplanationProvider implements ExplanationProvider {
                 + "hasMissingData=" + context.hasMissingData() + ", "
                 + "missingDataDescription=" + context.missingDataDescription() + ", "
                 + "dataLimitations=" + context.dataLimitations()
-                + ". Explain what the user is seeing and hearing.";
+                + ". " + languageLabel + ": " + language + ". " + explainPrompt;
     }
 
     private String buildRequestBody(String systemPrompt, String userPrompt, boolean narration) throws Exception {

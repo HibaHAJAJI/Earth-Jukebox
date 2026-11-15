@@ -3,6 +3,7 @@ import { AlertTriangle, Database, ExternalLink, Info, LoaderCircle, RefreshCw } 
 import useTemperatureData from '../hooks/useTemperatureData'
 import useTimeline from '../hooks/useTimeline'
 import AudioControls from '../components/AudioControls'
+import ChatAI from '../components/ChatAI'
 import TemperatureChart from '../components/TemperatureChart'
 import TemperatureInfo from '../components/TemperatureInfo'
 import TemperatureSummary from '../components/TemperatureSummary'
@@ -197,6 +198,8 @@ export default function Explore() {
               />
               <TemperatureInfo selectedRecord={timeline.currentRecord} metadata={metadata} />
             </div>
+
+            <ChatAI />
           </div>
         )}
       </div>

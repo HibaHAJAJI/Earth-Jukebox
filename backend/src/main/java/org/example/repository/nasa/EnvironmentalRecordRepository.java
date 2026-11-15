@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface EnvironmentalRecordRepository {
 
+    EnvironmentalRecord save(EnvironmentalRecord record);
+
     List<EnvironmentalRecord> findByDatasetName(String datasetName);
 
     List<EnvironmentalRecord> findByDatasetNameAndYear(String datasetName, Integer year);

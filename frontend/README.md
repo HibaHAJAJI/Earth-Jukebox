@@ -1,72 +1,20 @@
-# Earth Symphony
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+</div>
 
-Interactive frontend for the NASA Space Apps Challenge 2026 challenge
-**The Earth Information Jukebox**.
+# Run and deploy your AI Studio app
 
-Earth Symphony turns NASA GISS GISTEMP v4 monthly surface temperature anomalies
-into a synchronized visual and audio exploration experience.
+This contains everything you need to run your app locally.
 
-## Stack
+View your app in AI Studio: https://ai.studio/apps/7a6e9f4c-c3b4-4cac-ad27-0d3c540cc3ee
 
-- React 19 + Vite
-- React Router
-- Recharts
-- Lucide icons
-- Plain CSS (no UI framework)
+## Run Locally
 
-## Run locally
+**Prerequisites:**  Node.js
 
-```bash
-npm install
-npm run dev
-```
 
-Open `http://localhost:5173`.
-
-## Quality checks
-
-```bash
-npm run lint
-npm run build
-npm run preview
-```
-
-## Data status
-
-The app ships with clearly labelled synthetic mock data so the interface can be
-developed before the verified dataset arrives. Mock values are never presented
-as NASA measurements.
-
-To connect the verified JSON, create `frontend/.env.local`:
-
-```env
-VITE_TEMPERATURE_DATA_URL=/data/temperature.json
-```
-
-Missing values (`null`, `***`, empty strings) are preserved as gaps and are
-never converted to zero.
-
-## Audio status
-
-Audio is implemented in `src/services/sonificationService.js` with the Web Audio
-API. It maps the selected month's NASA temperature anomaly to pitch, uses the
-shared timeline for rhythm, adds a soft bell at year boundaries, and plays
-silence for missing values. Audio never starts automatically.
-
-See [`SONIFICATION.md`](./SONIFICATION.md) for the mapping and lifecycle.
-
-## Documentation
-
-- [`INTEGRATION.md`](./INTEGRATION.md) — data, audio, and shared-timeline
-  contracts for the rest of the team.
-- [`SONIFICATION.md`](./SONIFICATION.md) — pitch mapping, audio controls,
-  accessibility, and testing notes.
-- `.env.example` — data endpoint configuration example.
-
-## Scientific source
-
-NASA Goddard Institute for Space Studies (GISS) Surface Temperature Analysis
-(GISTEMP v4): https://data.giss.nasa.gov/gistemp/data_v4.html
-
-Earth Symphony is an independent hackathon project. It is not affiliated with,
-endorsed by, or operated by NASA.
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

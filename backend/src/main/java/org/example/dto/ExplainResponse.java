@@ -20,6 +20,8 @@ public record ExplainResponse(
 
         String unit,
 
+        String language,
+
         ValidationStatus validationStatus,
 
         String limitations

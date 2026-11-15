@@ -1,4 +1,10 @@
 import mockTemperatureData from '../data/mockTemperatureData.js'
+import {
+  fetchSeriesFromApi,
+  fetchPhenomena,
+  fetchSonificationMap,
+  fetchApiMeta,
+} from './api.js'
 
 /**
  * DATA INTEGRATION POINT
@@ -32,6 +38,11 @@ const MISSING_TOKEN_PATTERN = /^\*+$/
 function getConfiguredDataUrl() {
   const value = import.meta.env?.VITE_TEMPERATURE_DATA_URL
   return typeof value === 'string' ? value.trim() : ''
+}
+
+function getConfiguredApiBaseUrl() {
+  const value = import.meta.env?.VITE_API_BASE_URL
+  return typeof value === 'string' ? value.trim().replace(/\/$/, '') : ''
 }
 
 export function parseAnomaly(value) {
@@ -146,6 +157,19 @@ export function normalizeDataset(input, { forceMock = false } = {}) {
 }
 
 export async function fetchTemperatureDataset() {
+  const apiBaseUrl = getConfiguredApiBaseUrl()
+
+  // If VITE_API_BASE_URL is configured, fetch from the Spring Boot backend
+  if (apiBaseUrl) {
+    try {
+      return await fetchTemperatureFromBackend()
+    } catch (error) {
+      throw new Error(
+        `Could not reach the backend temperature API at ${apiBaseUrl}. ${error.message}`,
+      )
+    }
+  }
+
   const dataUrl = getConfiguredDataUrl()
 
   if (!dataUrl) {
@@ -178,6 +202,37 @@ export async function fetchTemperatureDataset() {
   }
 
   const dataset = normalizeDataset(payload)
+
+  if (dataset.data.length === 0) {
+    throw new Error(
+      'The temperature dataset loaded but contained no valid year/month records. Check the data format.',
+    )
+  }
+
+  return dataset
+}
+
+/**
+ * Fetch the monthly temperature anomaly series from the Spring Boot backend.
+ *
+ * Uses VITE_API_BASE_URL to call /api/v1/phenomena/global-temperature-anomaly/series
+ * with default resolution (monthly).
+ *
+ * @returns Promise resolving to the normalized dataset
+ * @throws Error if the request fails or returns no data
+ */
+export async function fetchTemperatureFromBackend() {
+  const apiBaseUrl = getConfiguredApiBaseUrl()
+  if (!apiBaseUrl) {
+    throw new Error('VITE_API_BASE_URL is not configured')
+  }
+
+  const response = await fetchSeriesFromApi('global-temperature-anomaly', {
+    resolution: 'monthly',
+  })
+
+  // The backend returns { metadata, data } which matches the expected shape
+  const dataset = normalizeDataset(response)
 
   if (dataset.data.length === 0) {
     throw new Error(

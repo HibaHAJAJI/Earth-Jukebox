@@ -10,6 +10,8 @@ import java.util.Optional;
  */
 public interface NasaImportBatchRepository {
 
+    NasaImportBatch save(NasaImportBatch batch);
+
     List<NasaImportBatch> findByDatasetId(String datasetId);
 
     Optional<NasaImportBatch> findByImportBatchId(String importBatchId);

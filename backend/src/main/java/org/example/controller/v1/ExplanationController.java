@@ -34,7 +34,7 @@ public class ExplanationController {
      */
     @PostMapping("/explain")
     public ResponseEntity<ExplainResponse> explain(@RequestBody @Valid ExplainRequest request) {
-        ExplainResponse response = explanationService.explain(request.year(), request.month());
+        ExplainResponse response = explanationService.explain(request.year(), request.month(), request.language());
         return ResponseEntity.ok(response);
     }
 }
